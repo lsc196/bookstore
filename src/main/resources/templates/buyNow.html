@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrqq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/header.css">
+    <script src="../../js/users/main.js" th:src="@{/js/users/main.js}"></script>
+</head>
+<body>
+<div th:replace="~{layout/nav::nav}"></div>
+<div class="container" id="cartContainer">
+        <form action="/submitOrder" method="post">
+            <h3>确认订单</h3>
+            <label>收货人：</label>
+            <input name="userName" type="text">
+            <label>&nbsp;&nbsp;手机号码：</label>
+            <input name="phone" type="number">
+            <label>&nbsp;&nbsp;地址：</label>
+            <input type="text" name="address">
+            <h4>商品清单</h4>
+            <table id="cart_table" class="table table-bordered">
+                <thead>
+                <tr align="center" bgcolor="#efeae5">
+                    <th width="150">商品图片</th>
+                    <th width="250">商品信息</th>
+                    <th width="80">单价</th>
+                    <th width="100">数量</th>
+                    <th width="80">金额</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr align="center" th:each="cart,Status:${cartList}">
+                    <td>
+                        <div style="float: left;margin-left: 10px;">
+                            <img  th:src="${cart.img_url}" style="height: 100px;width: 100px;">
+                        </div>
+                    </td>
+                    <td>
+                        <input hidden name="cartId" th:value="${cart.cart_id}"></input>
+                        <div class="name ep3" th:text="${cart.bname}"></div>
+                        <input hidden type="text" th:name="'orderDetailList['+${Status.index}+'].productId'" th:value="${cart.b_id}">
+                        <input hidden type="text" th:name="'orderDetailList['+${Status.index}+'].productName'" th:value="${cart.bname}">
+                        <input hidden type="text" th:name="'orderDetailList['+${Status.index}+'].productImage'" th:value="${cart.img_url}">
+                        <input hidden type="text" th:name="'orderDetailList['+${Status.index}+'].currentPrice'" th:value="${cart.price}">
+                        <input hidden type="text" th:name="'orderDetailList['+${Status.index}+'].quantity'" th:value="${cart.quantity}">
+                        <input hidden type="text" th:name="'orderDetailList['+${Status.index}+'].totalPrice'" th:value="${cart.sum}">
+                    </td>
+                    <td th:text="${cart.price}"></td>
+
+                    <td th:text="${cart.quantity}"></td>
+
+                    <td name="sum-one" th:text="${cart.sum}"></td>
+                </tr>
+
+
+                </tr>
+                </tbody>
+            </table>
+            <div style="background-color:#efeae5;height: 50px;">
+                <div style="float:right;">
+                    <input type="submit" id="submitOrder" value="提交订单"
+                           style="height: 50px;width:120px;background-color: blueviolet;font-size: 20px;color: white">
+                    </input>
+                </div>
+                <div style="float:right;width: 180px;height: 50px;line-height: 50px;">
+                    <div style="display: inline-block;">应付总金额：</div>
+                    <div id="sum-price" th:text="${totalSum}" style="display: inline-block;color: red;font-size: 20px;">
+                        0.00
+                    </div>
+                    <input hidden type="text" name="totalSum" th:value="${totalSum}">
+                </div>
+            </div>
+        </form>
+</div>
+<div th:replace="layout/footer :: footer"></div>
+</body>
+</html>

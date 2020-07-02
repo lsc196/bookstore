@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="card-header">
+
+    <div class="input-group col-md-7 col-xl-6">
+
+        <input type="text" class="form-control" id="searchBookName"
+               placeholder="输入书名称进行搜索">
+        <span class="input-group-btn">
+			<button class="btn btn-secondary" type="button" id="searchBookNameBtn">搜索
+				<i class="fa fa-search" aria-hidden="true"></i>
+			</button>
+		</span>
+        <a class="btn btn-primary" data-toggle="modal"
+                   data-target="#flipFlop" role="button" id="addBook"><i
+            class="fa fa-plus" aria-hidden="true"></i>添加
+        </a>
+
+    </div>
+</div>
+
+<div id="mainContainer" class="container">
+    <div id="mainContainerRepleace" class="row">
+        <div style="width:1000px;  overflow:scroll;">
+            <table class="table table-striped"  style="width:1700px;">
+                <thead>
+                <tr>
+                    <th data-field="operation">操作</th>
+                    <th data-field="id">ID</th>
+                    <th data-field="bname">书名</th>
+                    <th data-field="author">作者</th>
+                    <th data-field="price">价格</th>
+                    <th data-field="press">出版社</th>
+                    <th data-field="press">小图路径</th>
+                    <th data-field="press">大图路径</th>
+                    <th data-field="press">推荐指数</th>
+                    <th data-field="press">出版时间</th>
+                    <th data-field="press">版次</th>
+                    <th width="474px">详细</th>
+                    <th data-field="press">所属分类</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book : ${bookModel.bookList}">
+                    <td>
+                        <div>
+                            <a class="book-edit" data-toggle="modal"
+                               data-target="#flipFlop" role="button"
+                               data-th-attr="bookId=${book.bid}"> <i class="icon-eidt"></i>
+                            </a>
+                            <a class="book-delete" role="button"
+                               data-th-attr="bookId=${book.bid}"> <i class="icon-delete"
+                                                                     aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </td>
+                    <td th:text="${book.bid}"></td>
+                    <td th:text="${book.bname}"></td>
+                    <td th:text="${book.author}"></td>
+                    <td th:text="${book.price}"></td>
+                    <td th:text="${book.press}"></td>
+                    <td >
+                        <img th:src="${book.image_w}" style="height: 50px;width: 50px;">
+                    </td>
+                    <td >
+                        <img th:src="${book.image_b}" style="height: 50px;width: 50px;">
+                    </td>
+                    <td th:text="${book.popular}"></td>
+                    <td th:text="${book.publishtime}"></td>
+                    <td th:text="${book.edition}"></td>
+                    <td th:text="${book.details}"></td>
+                    <td th:text="${book.categoryId}"></td>
+
+
+                </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+
+        <!--<div th:replace="fragments/page :: page"></div>-->
+        <div th:replace="~{fragments/page :: page}"></div>
+    </div>
+
+</div>
+
+<!-- The modal -->
+<div class="modal fade" id="flipFlop" tabindex="-1" role="dialog"
+     aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalLabel">新增/编辑</h4>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body" id="bookFormContainer"></div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" id="submitEdit">提交</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script src="../../js/admins/book.js" th:src="@{/js/admins/book.js}"></script>

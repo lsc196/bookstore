@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta  content="text/html" charset="UTF-8">
+    <title sec:authentication="name"></title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div sec:authorize="isAuthenticated()">
+        <h1>用户已经登录</h1>
+        <span sec:authentication="name"></span>
+    </div>
+    <div sec:authorize="isAnonymous()">
+        <h1>用户没有登录</h1>
+    </div>
+    <div sec:authorize="hasRole('ROLE_USER')">
+        <h1 th:text="${user}"></h1>
+    </div>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <h1 th:text="${admin}"></h1>
+    </div>
+</div>
+</body>
+</html>

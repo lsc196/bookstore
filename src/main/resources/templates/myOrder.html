@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrqq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/header.css">
+    <script src="../../js/users/main.js" th:src="@{/js/users/main.js}"></script>
+</head>
+<body>
+<div th:replace="~{layout/nav::nav}"></div>
+<div class="container" id="orderContainer">
+    <h3>我的订单</h3>
+    <img src="/image/myorders.png" style="margin-right: auto;margin-left:auto;margin-bottom: 10px;">
+    <table id="cart_table" class="table ">
+        <thead>
+        <tr align="center" bgcolor="#efeae5" style="font-size: 15px">
+            <th width="10%"></th>
+            <th width="20%" align="left">商品信息</th>
+            <th width="10%"></th>
+            <th width="10%">单价</th>
+            <th width="10%">数量</th>
+            <th width="10%">金额</th>
+            <th width="10%">交易状态</th>
+            <th width="10%">交易操作</th>
+        </tr>
+        </thead>
+        <div th:each="order:${myOrders}">
+            <tbody>
+            <tr style="height:20px"></tr>
+            <tr bgcolor="#dcdcdc" style="font-size: 16px">
+                <td colspan="2" th:text="${order.getUpdatedTime()}" style="font-size: 16px;font-weight: bold;"></td>
+                <td colspan="4" th:text="'订单号:'+${order.getOrderNo()}" style="font-size: 16px;"></td>
+                <td align="center" th:text="${order.getStatus()}">
+                <td align="center" width="80">
+                    <a class="order-delete" role="button" data-th-attr="orderNo=${order.getOrderNo()}">
+                        <i class="icon-delete" aria-hidden="true"></i>
+                    </a>
+            </td>
+            </tr>
+            </tbody>
+            <tbody>
+            <div th:each="detail:${order.getOrderDetailList()}">
+                <tr style="font-size: 15px">
+                    <td align="center" >
+                            <img style="height: 80px;width: 80px;margin-left: 30px" th:src="${detail.productImage}">
+                    </td>
+                    <td> <div  th:text="${detail.getProductName()}"></div></td>
+                    <td></td>
+                    <td align="center" th:text="${detail.getCurrentPrice()}"></td>
+                    <td align="center" th:text="${detail.quantity}"></td>
+                    <td align="center" th:text="${detail.getTotalPrice()}"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </div>
+            </tbody>
+            <tbody>
+            <tr style="font-size: 15px">
+                <td colspan="2" th:text="'收货人：'+${order.getUserName()}"></td>
+                <td colspan="4" th:text="'地址：'+${order.getAddress()}"></td>
+                <div th:if="${order.getStatus()} eq '未付款'">
+                    <td colspan="2"  style="font-weight: bold">
+                        <a th:href="'/payment/payByOrderNo?orderNo='+${order.getOrderNo()}">去付款</a>
+                    </td>
+                </div>
+                <td th:if="${order.getStatus()} eq '交易成功'" colspan="2" th:text="'实付款：￥'+${order.getTotalSum()}" style="font-weight: bold"></td>
+            </tr>
+
+            </tbody>
+
+        </div>
+    </table>
+
+
+</div>
+<div th:replace="layout/footer :: footer"></div>
+</body>
+</html>

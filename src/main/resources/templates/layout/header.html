@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrqq.net.nz/thymeleaf/layout">
+    <head>
+        <meta charset="UTF-8">
+        <title>Thymeleaf in action</title>
+        <link rel="stylesheet" href="css/header.css">
+    </head>
+
+    <body>
+        <div th:fragment="header">
+            <div class="header">
+                <div class="w">
+                    <a class="logo" href="/index">网上书店</a>
+                    <div class="search-con">
+                        <input type="text" class="search-input" id="search-input" th:value="${searchName}" placeholder="请输入商品名称"/>
+                        <button type="button" class="btns search-btn" id="search-btn">搜索</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

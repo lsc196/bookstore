@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrqq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/header.css">
+
+    <script src="../../js/users/main.js" th:src="@{/js/users/main.js}"></script>
+</head>
+<body>
+<div th:replace="~{layout/nav::nav}"></div>
+<div class="container" id="cartContainer">
+    <h3>购物车</h3>
+    <img src="/image/cartbj.png" style="margin-right: auto;margin-left:auto;margin-bottom: 10px;">
+    <div th:if="${#lists.isEmpty(cartList)}" style="text-align: center">
+        <h4>当前购物车为空，点击去<a href="/index">购物</a></h4>
+    </div>
+    <div th:if="${ not #lists.isEmpty(cartList)}">
+        <table id="cart_table" class="table">
+            <thead>
+            <tr bgcolor="#efeae5" align="center">
+                <th width="150">商品图片</th>
+                <th width="250">商品信息</th>
+                <th width="80" >单价</th>
+                <th width="100">数量</th>
+                <th width="80">金额</th>
+                <th width="80">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr align="center" th:each="cart:${cartList}">
+                <td align="left">
+                    <div style="float: left">
+                        <input type="checkbox" class="check-one">
+                    </div>
+                    <div style="float: left;margin-left: 10px;">
+                        <img th:src="${cart.img_url}" style="height: 100px;width: 100px;">
+                    </div>
+                </td>
+                <td align="left">
+                    <div hidden name="cart_id" th:text="${cart.cart_id}"></div>
+                    <div class="name ep3" th:text="'书名：'+${cart.bname}"></div>
+                    <div class="name ep3" th:text="'作者：'+${cart.author}"></div>
+                    <div class="name ep3" th:text="'出版社：'+${cart.press}"></div>
+                </td>
+                <td name="price" th:text="${cart.price}"></td>
+                <td>
+                    <div class="cart-num__box">
+                        <input name="subCount" style="width: 20px;" type="button" class="sub" value="-">
+                        <input name="cartQuantity" style="width: 40px;text-align: center;" type="text"
+                               th:value="${cart.quantity}" maxlength="2">
+                        <input name="incCount" style="width: 20px;" type="button" class="add" value="+">
+                    </div>
+                </td>
+                <td name="sum-one" th:text="${cart.sum}"></td>
+                <td><a href="#" class="cart_delete" th:attr="data_cartid=${cart.cart_id}">
+                    <i class="icon-delete" aria-hidden="true"></i>
+                </a></td>
+            </tr>
+            </tbody>
+        </table>
+        <div style="background-color:#efeae5;height: 50px;">
+            <div style="float:left;line-height: 50px;">
+                <label class="checked-label" style="margin-left: 10px;"><input type="checkbox" class="check-all"
+                                                                               id="check-all"><i></i> 全选</label>
+                <a href="#" id="delete_select" hidefocus="true" style="margin-left: 50px">删除</a>
+            </div>
+            <div style="float:right;">
+                <button id="jiesuan" disabled="true"
+                        style="height: 50px;width:120px;background-color: #555555;font-size: 20px;color: white">结 &nbsp;
+                    算
+                </button>
+            </div>
+            <div style="float:right;width: 120px;height: 50px;line-height: 50px;">
+
+                <div style="display: inline-block;">合计</div>
+                <div id="sum-price" style="display: inline-block;color: red;font-size: 20px;">
+                    0.00
+                </div>
+            </div>
+            <div style="float:right;width: 120px;height: 50px;line-height: 50px;">
+                <div style="display: inline-block;">已选商品</div>
+                <div id="product_count" style="display: inline-block;color: red;font-size: 18px">
+                    0
+                </div>
+                <div style="display: inline-block;">件</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="layout/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+.footer{
+    margin-top: 20px;
+    padding-bottom: 10px;
+}
+.footer .links{
+    text-align: center;
+    color: #666;
+    line-height: 30px;
+}
+.footer .links .link{
+    padding: 0 10px;
+}
+.footer .copyright{
+    text-align: center;
+    color: #666;
+    line-height: 30px;
+}
+/* 定宽布局 */
+.w{
+    width: 1080px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+.icon-eidt{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url(../image/icon/edit-icon.png) ;
+    background-size: 16px 16px;
+    background-repeat: no-repeat;
+    margin-right: 5px;
+}
+.icon-delete{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url(../image/icon/delete-icon.png) ;
+    background-size: 16px 16px;
+    background-repeat: no-repeat;
+    margin-left: 5px;
+}
+.icon-see{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url(../image/icon/icon-see.png) ;
+    background-size: 16px 16px;
+    background-repeat: no-repeat;
+    margin-right: 5px;
+}

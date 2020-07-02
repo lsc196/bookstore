@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrqq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/header.css">
+    <script src="../../js/users/main.js" th:src="@{/js/users/main.js}"></script>
+</head>
+<body>
+<div th:replace="~{layout/nav::nav}"></div>
+<div th:replace="~{layout/header::header}"></div>
+</div>
+<div class="w" id="mainContainer">
+    <div class="container">  <!-- 开加一个container的目的是为了让整体布局居中 -->
+        <!-- 开始 -->
+        <nav style="
+    padding: .75rem 1rem;
+    margin-bottom: 1rem;
+    list-style: none;
+    height: 42px;
+    background-color: #e9ecef;
+    border-radius: .25rem;" >
+            <div style="float: left">
+                <a class="breadcrumb-item" href="/index">首页</a>
+                <a id="bookNav" class="breadcrumb-item active" href="#" th:text="${bookNav}">图书分类</a>
+                <div id="flag" hidden th:text="${flag}"></div>
+            </div>
+            <div style="float: right">
+                <div style="font-weight: bold;float: left;margin-right: 5px">排序方式:</div>
+                <select id="sort" style="float: left;" >
+                    <option th:selected="${sort} eq 'default'" value="default">默认</option>
+                    <option th:selected="${sort} eq 'price'" value="price">价格</option>
+                    <option th:selected="${sort} eq 'salesVolume'" value="salesVolume">销量</option>
+                </select>
+            </div>
+
+        </nav>
+        <div class="row" th:if="${ not #lists.isEmpty(bookList)}"><!-- 将要加入的略缩图放入row中 -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" th:if="${#lists.size(bookList)} ge 1">
+                <div class="thumbnail" >
+                    <a th:href="@{'/bookdesc?bid='+${bookList[0].bid}}" target="_blank">
+                        <img th:src="${bookList[0].image_w}" style="height: 210px;width: 210px;">
+                    </a>
+                    <div class="caption">
+                        <div class = "bookprice" th:text="'￥' + ${bookList[0].price}"></div>
+                        <a th:href="@{'/bookdesc?bid='+${bookList[0].bid}}" target="_blank" >
+                            <p style="color: black;font-size: 16px" th:text="${bookList[0].bname}"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" th:if="${#lists.size(bookList)} ge 2">
+                <div class="thumbnail" >
+                    <a th:href="@{'/bookdesc?bid='+${bookList[1].bid}}" target="_blank">
+                        <img th:src="${bookList[1].image_w}"style="height: 210px;width: 210px;">
+                    </a>
+                    <div class="caption">
+                        <div class = "bookprice" th:text="'￥' + ${bookList[1].price}"></div>
+                        <a th:href="@{'/bookdesc?bid='+${bookList[1].bid}}" target="_blank" >
+                            <p style="color: black;font-size: 16px" th:text="${bookList[1].bname}"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" th:if="${#lists.size(bookList)} ge 3">
+                <div class="thumbnail" >
+                    <a th:href="@{'/bookdesc?bid='+${bookList[2].bid}}" target="_blank">
+                        <img th:src="${bookList[2].image_w}" style="height: 210px;width: 210px;">
+                    </a>
+                    <div class="caption">
+                        <div class = "bookprice" th:text="'￥' + ${bookList[2].price}"></div>
+                        <a th:href="@{'/bookdesc?bid='+${bookList[2].bid}}" target="_blank" >
+                            <p style="color: black;font-size: 16px" th:text="${bookList[2].bname}"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" th:if="${#lists.size(bookList)} ge 4">
+                <div class="thumbnail" >
+                    <a th:href="@{'/bookdesc?bid='+${bookList[3].bid}}" target="_blank">
+                        <img th:src="${bookList[3].image_w}" style="height: 210px;width: 210px;">
+                    </a>
+                    <div class="caption">
+                        <div class = "bookprice" th:text="'￥' + ${bookList[3].price}"></div>
+                        <a th:href="@{'/bookdesc?bid='+${bookList[3].bid}}" target="_blank" >
+                            <p style="color: black;font-size: 16px" th:text="${bookList[3].bname}"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" th:if="${ not #lists.isEmpty(bookList)}"><!-- 将要加入的略缩图放入row中 -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" th:if="${#lists.size(bookList)} ge 5">
+                <div class="thumbnail" >
+                    <a th:href="@{'/bookdesc?bid='+${bookList[4].bid}}" target="_blank">
+                        <img th:src="${bookList[4].image_w}" style="height: 210px;width: 210px;">
+                    </a>
+                    <div class="caption">
+                        <div class = "bookprice" th:text="'￥' + ${bookList[4].price}"></div>
+                        <a th:href="@{'/bookdesc?bid='+${bookList[4].bid}}" target="_blank" >
+                            <p style="color: black;font-size: 16px" th:text="${bookList[4].bname}"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" th:if="${#lists.size(bookList)} ge 6">
+                <div class="thumbnail" >
+                    <a th:href="@{'/bookdesc?bid='+${bookList[5].bid}}" target="_blank">
+                        <img th:src="${bookList[5].image_w}" style="height: 210px;width: 210px;">
+                    </a>
+                    <div class="caption">
+                        <div class = "bookprice" th:text="'￥' + ${bookList[5].price}"></div>
+                        <a th:href="@{'/bookdesc?bid='+${bookList[5].bid}}" target="_blank" >
+                            <p style="color: black;font-size: 16px" th:text="${bookList[5].bname}"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" th:if="${#lists.size(bookList)} ge 7">
+                <div class="thumbnail" >
+                    <a th:href="@{'/bookdesc?bid='+${bookList[6].bid}}" target="_blank">
+                        <img th:src="${bookList[6].image_w}" style="height: 210px;width: 210px;">
+                    </a>
+                    <div class="caption">
+                        <div class = "bookprice" th:text="'￥' + ${bookList[6].price}"></div>
+                        <a th:href="@{'/bookdesc?bid='+${bookList[6].bid}}" target="_blank" >
+                            <p style="color: black;font-size: 16px" th:text="${bookList[6].bname}"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" th:if="${#lists.size(bookList)} ge 8">
+                <div class="thumbnail" >
+                    <a th:href="@{'/bookdesc?bid='+${bookList[7].bid}}" target="_blank">
+                        <img th:src="${bookList[7].image_w}" style="height: 210px;width: 210px;">
+                    </a>
+                    <div class="caption">
+                        <div class = "bookprice" th:text="'￥' + ${bookList[7].price}"></div>
+                        <a th:href="@{'/bookdesc?bid='+${bookList[7].bid}}" target="_blank" >
+                            <p style="color: black;font-size: 16px" th:text="${bookList[7].bname}"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div style="margin:0 auto;"><div th:replace="~{fragments/bookpage :: bookpage}"></div></div>
+
+        </div>
+    </div>
+
+</div>
+<div th:replace="layout/footer :: footer"></div>
+</body>
+</html>

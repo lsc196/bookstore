@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        $(document).ready(function () {
+            $(function() {
+                $('tr.parent')
+                    .css("cursor","pointer")
+                    .attr("title","点击这里展开/关闭")
+                    .click(function(){
+                        $(this).siblings('.child-'+this.id).toggle();//当前点击某行同胞行，查找制定子元素类，折叠隐藏
+                    });
+            });
+        })
+
+    </script>
+</head>
+
+<body>
+<table id="detail_table" class="table">
+    <col style="width:80px;">
+    <col style="width:80px;">
+    <col style="width:150px;">
+    <col style="width:150px;">
+    <col style="width:100px;">
+    <col style="width:100px;">
+    <col style="width:150px;">
+    <col style="width:100px;">
+    <col style="width:100px;">
+    <col style="min-width:80px;">
+    <col style="width:150px;">
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th> 部门名称</th>
+        <th> 老人姓名</th>
+        <th>基本费用</th>
+        <th>付费方式</th>
+        <th>折扣</th>
+        <th>总支付</th>
+        <th>入院时间</th>
+        <th>出院时间</th>
+        <th>退换金额</th>
+        <th>是否结算</th>
+    </tr>
+    </thead>
+    <tbody> <!--第一行-->
+    <tr class="parent" id="row123">
+        <td>123</td>
+        <td> 部门名称</td>
+        <td> 老人姓名</td>
+        <td>基本费用</td>
+        <td>付费方式</td>
+        <td>折扣</td>
+        <td>总支付</td>
+        <td>入院时间</td>
+        <td>出院时间</td>
+        <td>退换金额</td>
+        <td>是否结算</td>
+    </tr> <!--第一行展开-->
+    <tr class="child-row123 child-head-background">
+        <th>编号</th>
+        <th colspan="2"> 入院时间</th>
+        <th colspan="2"> 离院时间</th>
+        <th colspan="2">在院时间</th>
+        <th colspan="5">离院原因</th>
+    </tr>
+    <tr class="child-row123 child-background">
+        <td>123</td>
+        <td colspan="2">2007-02-03</td>
+        <td colspan="2">2007-02-03</td>
+        <td colspan="2">2007-02-03</td>
+        <td colspan="5">Another description</td>
+    </tr>
+    <tr class="child-row123 child-background">
+        <td>123</td>
+        <td colspan="2">2007-02-03</td>
+        <td colspan="2">2007-02-03</td>
+        <td colspan="2">2007-02-03</td>
+        <td colspan="5">Another description</td>
+    </tr> <!--第二行-->
+    <tr class="parent" id="row124">
+        <td>124</td>
+        <td> 部门名称</td>
+        <td> 老人姓名</td>
+        <td>基本费用</td>
+        <td>付费方式</td>
+        <td>折扣</td>
+        <td>总支付</td>
+        <td>入院时间</td>
+        <td>出院时间</td>
+        <td>退换金额</td>
+        <td>是否结算</td>
+    </tr>
+    <tr class="child-row124 child-head-background">
+        <th>编号</th>
+        <th colspan="2"> 入院时间</th>
+        <th colspan="2"> 离院时间</th>
+        <th colspan="2">在院时间</th>
+        <th colspan="5">离院原因</th>
+    </tr>
+    <tr class="child-row124 child-background">
+        <td>123</td>
+        <td colspan="2">2007-02-03</td>
+        <td colspan="2">2007-02-03</td>
+        <td colspan="2">2007-02-03</td>
+        <td colspan="5">Another description</td>
+    </tr>
+    <tr class="child-row124 child-background">
+        <td>123</td>
+        <td colspan="2">2007-02-03</td>
+        <td colspan="2">2007-02-03</td>
+        <td colspan="2">2007-02-03</td>
+        <td colspan="5">Another description</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

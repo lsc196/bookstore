@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrqq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/login.css">
+
+</head>
+<body>
+<form id="from" th:action="@{/register}" method="post">
+    <div class="mycenter">
+        <div class="mysign">
+            <div class="col-md-11 text-center">
+                <h2>用户注册</h2>
+            </div>
+            <div class="col-md-10">
+            </div>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="username" maxlength="8" placeholder="请输入账户名" required
+                       autofocus/>
+            </div>
+            <div class="col-md-10">
+            </div>
+            <div class="col-md-10">
+                <input type="password" class="form-control" name="password" placeholder="请输入密码" required
+                       autofocus/>
+            </div>
+            <div class="col-md-10">
+                <input type="email" class="form-control" name="email" placeholder="请输入邮箱" required
+                       autofocus/>
+            </div>
+            <div class="col-md-10">
+                <input  type="text"  class="form-control" name="phone" minlength="11" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')" placeholder="请输入手机号" required/>
+            </div>
+            <div class="col-md-10">
+                <button type="submit" id="btn" class="btn btn-success col-lg-12">
+                    立即注册
+                </button>
+            </div>
+            <div style="text-align: center">
+                <a href="/login">已有账号，去登录</a>
+            </div>
+            <div  style="text-align: center" th:if="${registerError}">
+                <div class="alert alert-danger">
+                    <strong th:text="${errorMsg}"></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

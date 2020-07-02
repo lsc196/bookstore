@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrqq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/header.css">
+    <script src="../../js/users/main.js" th:src="@{/js/users/main.js}"></script>
+</head>
+<body>
+<div th:replace="~{layout/nav::nav}"></div>
+<div th:replace="~{layout/header::header}"></div>
+<div class="container">
+    <nav class="breadcrumb">
+        <a class="breadcrumb-item" href="/index">首页</a>
+        <a class="breadcrumb-item" href="#">图书分类</a>
+        <a class="breadcrumb-item active" href="#" >图书详情</a>
+    </nav>
+</div>
+<div class="w" id="mainContainer">
+    <div class="container">  <!-- 开加一个container的目的是为了让整体布局居中 -->
+        <div class="row"><!-- 将要加入的略缩图放入row中 -->
+            <!-- 第一张略缩图开始 -->
+            <div class="col-md-5">
+                <div class="thumbnail">
+                    <img th:src="${book.image_b}" style="width: 420px;height: 420px">
+                </div>
+            </div>
+            <!-- 第一张略缩图结束 -->
+            <div class="col-md-6">
+                <div class="caption">
+                    <p style="font-weight:bold;font-size:18px" th:text="${book.details}"></p>
+                    <div class="bookdetail" th:text="'书名:'+${book.bname}"></div>
+                    <div class="bookdetail" th:text="'作者:'+${book.author}"></div>
+                    <div class="bookdetail" th:text="'出版社:'+${book.press}"></div>
+                    <div class="bookdetail" th:text="'出版时间:'+${book.publishtime}"></div>
+                    <div class="bookdetail" th:text="'版次：'+${book.edition}"></div>
+                    <div class="bookprice" th:text="'￥' + ${book.price}"></div>
+                    <p></p>
+                    <input hidden id="bid" name="bid" th:value="${book.bid}">
+                    <div class="bookdetail"> 数量：
+                        <input id="quantity" style="width: 40px;text-align: center;margin-right: 5px;" type="text" name="quantity"
+                                     value="1"/> 本</div>
+                    <br/>
+                    <br/>
+                    <div sec:authorize="isAuthenticated()">
+                        <button id="buy" type="button" class="btn btn-primary">立即购买</button>
+                        <button id="addCart" type="button" class="btn" style="background-color: red;color: white"><img src="/image/icon/cart-while.png" style="height: 23px;width: 23px; display: inline-block;">加入购物车</button>                    </div>
+                    <div sec:authorize="isAnonymous()">
+                        <button id="unbuy" type="button" class="btn btn-primary">立即购买</button>
+                        <button id="unAddCart" type="button" class="btn" style="background-color: red;color: white">加入购物车</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+    <div th:replace="layout/footer :: footer"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrqq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/header.css">
+    <script src="../../js/users/main.js" th:src="@{/js/users/main.js}"></script>
+</head>
+<body>
+<div th:replace="~{layout/nav::nav}"></div>
+<div class="container" id="orderContainer">
+    <h3>个人中心</h3>
+    <div>
+        <div style="margin-left:auto;margin-right:auto;width: 300px;height: 300px;font-size: 18px;">
+            <form action="/updateUesr" method="post">
+                <div class="alert alert-danger" th:if="${upodateError}">
+                    <strong>错误!</strong> <div th:text="${errorMsg}" ></div>
+                </div>
+                <label>用户名称：</label>
+                <input hidden name="id" th:value="${user.getId()}">
+                <label th:text="${user.getUsername()}"></label>
+                <br>
+                <label>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+                <input name="password" type="password" th:value="${user.getPassword()}">
+                <br>
+                <label>手机号码：</label>
+                <input name="phone" type="number" th:value="${user.getPhone()}">
+                <br>
+                <label>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：</label>
+                <input name="email" type="email" th:value="${user.getEmail()}">
+                <br>
+                <input type="submit" value="保存" class="btn btn-outline-primary">
+            </form>
+        </div>
+    </div>
+
+</div>
+<div th:replace="layout/footer :: footer"></div>
+</body>
+</html>

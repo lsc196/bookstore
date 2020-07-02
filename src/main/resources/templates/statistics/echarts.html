@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <!-- 引入 ECharts 文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="../../js/admins/echarts.min.js" ></script>
+</head>
+<body>
+<div style="margin-bottom: 10px">
+    <span style="font-weight: bold">网上书店各类书籍销售统计：</span>
+    <select id="salaSelect">
+        <option value="all">全部</option>
+        <option value="oneMonth">近一个月</option>
+        <option value="threeMonth">近三个月</option>
+        <option value="sixMonth">近半年</option>
+        <option value="oneYear">近一年</option>
+    </select>
+    <span id = "salasCountSum" style="font-weight: bold;margin-left: 10px"></span>
+</div>
+<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+<div id="main" style="width: 980px;height:300px;"></div>
+<div id="main2" style="width: 980px;height:300px;"></div>
+<script type="text/javascript">
+   function myCharts(salaCatagory) {
+       // 基于准备好的dom，初始化echarts实例
+       var myChart = echarts.init(document.getElementById('main'));//main是<div id="main" style="width: 600px;height:400px;"></div>的id
+       //数据加载完之前先显示一段简单的loading动画
+       myChart.showLoading();
+       var names=[];    //横坐标数组（实际用来盛放X轴坐标值）
+       var values=[];    //纵坐标数组（实际用来盛放Y坐标值）
+       $.ajax({
+           type : "get",
+           async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+           url : "/manage/statistics/bingtu?salaCatagory="+salaCatagory,    //请求发送到**处
+           dataType : "json",        //返回数据形式为json
+           success : function(result) {
+               //请求成功时执行该函数内容，result即为服务器返回的json对象
+               if (result) {
+                   for(var i=0;i<result.body.salasVos.length;i++){
+                       names.push(result.body.salasVos[i].name);
+                       values.push(result.body.salasVos[i].value);
+                   }
+                   $("#salasCountSum").html('共销售 '+ result.body.sum +" 本");
+                   myChart.hideLoading();    //隐藏加载动画
+                   var option = {
+                       title : {
+                           text: '网上书店各类书籍总销售实时统计',
+                           subtext: '图书分类销售情况',
+                           x:'center'
+                       },
+                       tooltip : {
+                           trigger: 'item',
+                           formatter: "{a} <br/>{b} : {c} ({d}%)"
+                       },
+                       legend: {
+                           orient: 'vertical',
+                           left: 'left',
+                           data: names
+                       },
+                       series : [
+                           {
+                               name: '销量（本）',
+                               type: 'pie',
+                               radius : '55%',
+                               center: ['50%', '60%'],
+                               data:result.body.salasVos,
+                               itemStyle: {
+                                   emphasis: {
+                                       shadowBlur: 10,
+                                       shadowOffsetX: 0,
+                                       shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                   }
+                               }
+                           }
+                       ]
+                   };
+                   // 使用刚指定的配置项和数据显示图表。
+                   myChart.setOption(option);
+               }
+           },
+           error : function(errorMsg) {
+               //请求失败时执行该函数
+               alert("图表请求数据失败!");
+               myChart.hideLoading();
+           }
+       });//end ajax
+   }
+
+   myCharts("all");
+
+    var myChart2 = echarts.init(document.getElementById('main2'));//main是<div id="main" style="width: 600px;height:400px;"></div>的id
+    //数据加载完之前先显示一段简单的loading动画
+    myChart2.showLoading();
+    var x=[];    //横坐标数组（实际用来盛放X轴坐标值）
+    var data=[];    //纵坐标数组（实际用来盛放Y坐标值）
+    $.ajax({
+        type : "get",
+        async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+        url : "/manage/statistics/zhexiantu",    //请求发送到**处
+        dataType : "json",        //返回数据形式为json
+        success : function(result) {
+            //请求成功时执行该函数内容，result即为服务器返回的json对象
+            if (result) {
+
+                myChart2.hideLoading();    //隐藏加载动画
+                var option2 = {
+                    title: {
+                        text: '近15日销售额折线图'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: ['销售额（元）']
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    toolbox: {
+                        feature: {
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: result.body.xAxis
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            name: '销售额（元）',
+                            type: 'line',
+
+                            data: result.body.datas
+                        }
+                    ]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart2.setOption(option2);
+            }
+        },
+        error : function(errorMsg) {
+            //请求失败时执行该函数
+            alert("图表请求数据失败!");
+            myChart.hideLoading();
+        }
+    });//end ajax
+
+    $("#salaSelect").change(function () {
+        var salaCategory = $("#salaSelect").val();
+        myCharts(salaCategory);
+    });
+
+</script>
+</body>
+</html>
